@@ -2,6 +2,7 @@ import os
 import time
 import requests
 from selenium import webdriver 
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By # This needs to be used 
 
 def fetch_image_urls(query: str, max_links_to_fetch: int, wd: webdriver, sleep_between_interactions: int = 1):
@@ -83,7 +84,8 @@ def search_and_download(search_term: str, driver_path: str, target_path='./image
 
     if not os.path.exists(target_folder):
         os.makedirs(target_folder)
-
+    chrome_options = Options()
+    chrome_options.headless = True
     with webdriver.Chrome(executable_path=driver_path) as wd:
         res = fetch_image_urls(search_term, number_images, wd=wd, sleep_between_interactions=0.5)
     
